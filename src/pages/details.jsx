@@ -73,7 +73,7 @@ const Details = () => {
   useEffect(() => {
     getMovieDetails();
     onOpen();
-  }, [getMovieDetails, onOpen]);
+  }, []);
 
   return (
     <>

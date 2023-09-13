@@ -63,7 +63,7 @@ const HomePage = () => {
       }
     };
     getData();
-  }, [FetchTopMovies, showToast]);
+  }, []);
 
   const handleSearchChange = async (e) => {
     const newSearchTerm = e.target.value;
