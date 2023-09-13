@@ -112,6 +112,7 @@ const HomePage = () => {
               placeholder="What do you want to watch?"
               border={"1px solid #fff"}
               borderRadius={"4px"}
+              color='#fff'
               w={"400px"}
               _placeholder={{ color: "#fff" }}
               value={input}
@@ -129,18 +130,18 @@ const HomePage = () => {
             </Button>
           </Box>
           <Flex gap={"20px"}>
-            <Text>Sign in</Text>
+            <Text color='#fff'>Sign in</Text>
             <Circle bg={"#B91C1C"} borderRadius={"50px"} p="5px">
               <HiMiniBars2 />
             </Circle>
           </Flex>
         </HStack>
         <Flex flexDir={"column"} mt="40px">
-          <Box fontSize={"2.5rem"} fontWeight={600} lineHeight={"45px"}>
+          <Box fontSize={"2.5rem"} fontWeight={600} lineHeight={"45px"} color='#fff'>
             <Text>John Wick 3:</Text>
             <Text>Parabellum</Text>
           </Box>
-          <HStack gap="40px" mt="20px">
+          <HStack gap="40px" mt="20px" color={'#fff'}>
             <Flex>
               <Img src="/images/imdb.png" w={"50px"} />
               <Text>86.0/100</Text>
@@ -150,7 +151,7 @@ const HomePage = () => {
               <Text>97%</Text>
             </Flex>
           </HStack>
-          <Text maxW={"300px"} fontSize={"0.9rem"} my="20px">
+          <Text maxW={"300px"} fontSize={"0.9rem"} my="20px" color='#fff'>
             John Wick is on the run after killing a member of the international
             assassins&#39; guild and with a $14 million price tag on his head,
             he is a target of hit men and women everywhere...
