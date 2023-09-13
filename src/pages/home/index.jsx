@@ -36,31 +36,34 @@ const HomePage = () => {
   const { push } = useRouter();
 
   const changeFavoriteIcon = () => {
-    setFavorite((show) => !show)
-  }
+    setFavorite((show) => !show);
+  };
 
   const toast = useToast();
   const showToast = (error) => {
     toast({
-      title: 'Error retrieving data.',
+      title: "Error retrieving data.",
       description: error,
-      status: 'error',
+      status: "error",
       duration: 9000,
       isClosable: true,
-    })
-  }
+    });
+  };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const useData = async () => {
+    const getData = async () => {
       try {
         const { data } = await Promise.resolve(FetchTopMovies());
         setMovieData(data.results);
       } catch (err) {
-        err?.response?.data?.status_message ? showToast(err?.response?.data?.status_message) : showToast(err?.message);
+        err?.response?.data?.status_message
+          ? showToast(err?.response?.data?.status_message)
+          : showToast(err?.message);
       }
     };
-    useData();
-  }, []);
+    getData();
+  }, [FetchTopMovies, showToast]);
 
   const handleSearchChange = async (e) => {
     const newSearchTerm = e.target.value;
@@ -72,7 +75,9 @@ const HomePage = () => {
         setFindMovie(data.results);
         setLoading(true);
       } catch (err) {
-        err?.response?.data?.status_message ? showToast(err?.response?.data?.status_message) : showToast(err?.message);
+        err?.response?.data?.status_message
+          ? showToast(err?.response?.data?.status_message)
+          : showToast(err?.message);
       } finally {
         setLoading(false);
       }
@@ -80,7 +85,6 @@ const HomePage = () => {
       setFindMovie([]);
     }
   };
-
 
   return (
     <>
@@ -148,8 +152,8 @@ const HomePage = () => {
           </HStack>
           <Text maxW={"300px"} fontSize={"0.9rem"} my="20px">
             John Wick is on the run after killing a member of the international
-            assassins' guild and with a $14 million price tag on his head, he is
-            a target of hit men and women everywhere...
+            assassins&#39; guild and with a $14 million price tag on his head,
+            he is a target of hit men and women everywhere...
           </Text>
         </Flex>
         <Flex justify={{ base: "center", lg: "start" }}>
@@ -201,8 +205,8 @@ const HomePage = () => {
                       />
                       <Button
                         bg={"none"}
-                        w='40px'
-                        h='40px'
+                        w="40px"
+                        h="40px"
                         borderRadius={0}
                         p="5px"
                         pos="absolute"
@@ -212,7 +216,11 @@ const HomePage = () => {
                         onClick={changeFavoriteIcon}
                         zIndex={99}
                       >
-                        { favorite ? <AiOutlineHeart color="#d71818"  size={"20px"} /> : <AiFillHeart color="#d71818" size={"20px"} />}
+                        {favorite ? (
+                          <AiOutlineHeart color="#d71818" size={"20px"} />
+                        ) : (
+                          <AiFillHeart color="#d71818" size={"20px"} />
+                        )}
                       </Button>
                     </Box>
                     <Text
@@ -264,7 +272,12 @@ const HomePage = () => {
                 .filter(({ poster_path }) => poster_path !== null)
                 .map(({ title, poster_path, release_date, id }) => (
                   <>
-                    <Box data-testid="movie-card" key={id} cursor={"pointer"} onClick={() => push(`/details?id=${id}`)}>
+                    <Box
+                      data-testid="movie-card"
+                      key={id}
+                      cursor={"pointer"}
+                      onClick={() => push(`/details?id=${id}`)}
+                    >
                       <Box pos={"relative"}>
                         <Img
                           src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
@@ -281,7 +294,11 @@ const HomePage = () => {
                           right={2}
                           onClick={changeFavoriteIcon}
                         >
-                          { favorite ? <AiOutlineHeart color="#d71818"  size={"20px"} /> : <AiFillHeart color="#d71818" size={"20px"} />}
+                          {favorite ? (
+                            <AiOutlineHeart color="#d71818" size={"20px"} />
+                          ) : (
+                            <AiFillHeart color="#d71818" size={"20px"} />
+                          )}
                         </Button>
                       </Box>
                       <Text
