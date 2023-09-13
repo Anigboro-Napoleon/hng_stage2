@@ -8,6 +8,7 @@ import {
   Input,
   SimpleGrid,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
@@ -19,13 +20,14 @@ import {
   BiLogoTwitter,
 } from "react-icons/bi";
 import { FaYoutube } from "react-icons/fa";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import useApi from "@/hooks/useApi";
 import { useRouter } from "next/router";
 
 const HomePage = () => {
   const [movieData, setMovieData] = useState([]);
   const [findMovie, setFindMovie] = useState([]);
+  const [favorite, setFavorite] = useState(false);
   const [input, setInput] = useState("");
   const { FetchTopMovies, SearchMovie } = useApi();
   const date = new Date().getFullYear();
@@ -33,17 +35,28 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const { push } = useRouter();
 
+  const changeFavoriteIcon = () => {
+    setFavorite((show) => !show)
+  }
+
+  const toast = useToast();
+  const showToast = (error) => {
+    toast({
+      title: 'Error retrieving data.',
+      description: error,
+      status: 'error',
+      duration: 9000,
+      isClosable: true,
+    })
+  }
+
   useEffect(() => {
     const useData = async () => {
       try {
         const { data } = await Promise.resolve(FetchTopMovies());
         setMovieData(data.results);
-        // setGetId(da)
-        // console.log('id', data.results)
-        // console.log('search for data', searchData)
       } catch (err) {
-        console.log(err);
-        toast.error("Error fetching movies");
+        err?.response?.data?.status_message ? showToast(err?.response?.data?.status_message) : showToast(err?.message);
       }
     };
     useData();
@@ -56,11 +69,10 @@ const HomePage = () => {
       try {
         setLoading(false);
         const { data } = await SearchMovie(newSearchTerm);
-        console.log("show search data", data.results);
         setFindMovie(data.results);
         setLoading(true);
       } catch (err) {
-        console.log(err);
+        err?.response?.data?.status_message ? showToast(err?.response?.data?.status_message) : showToast(err?.message);
       } finally {
         setLoading(false);
       }
@@ -69,7 +81,6 @@ const HomePage = () => {
     }
   };
 
-  console.log(findMovie);
 
   return (
     <>
@@ -190,14 +201,18 @@ const HomePage = () => {
                       />
                       <Button
                         bg={"none"}
+                        w='40px'
+                        h='40px'
                         borderRadius={0}
                         p="5px"
                         pos="absolute"
                         _hover={{ bg: "none" }}
                         top={0}
                         right={2}
+                        onClick={changeFavoriteIcon}
+                        zIndex={99}
                       >
-                        <AiOutlineHeart size={"20px"} />
+                        { favorite ? <AiOutlineHeart color="#d71818"  size={"20px"} /> : <AiFillHeart color="#d71818" size={"20px"} />}
                       </Button>
                     </Box>
                     <Text
@@ -249,7 +264,7 @@ const HomePage = () => {
                 .filter(({ poster_path }) => poster_path !== null)
                 .map(({ title, poster_path, release_date, id }) => (
                   <>
-                    <Box data-testid="movie-card" key={id} cursor={"pointer"}>
+                    <Box data-testid="movie-card" key={id} cursor={"pointer"} onClick={() => push(`/details?id=${id}`)}>
                       <Box pos={"relative"}>
                         <Img
                           src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
@@ -264,8 +279,9 @@ const HomePage = () => {
                           _hover={{ bg: "none" }}
                           top={0}
                           right={2}
+                          onClick={changeFavoriteIcon}
                         >
-                          <AiOutlineHeart size={"20px"} />
+                          { favorite ? <AiOutlineHeart color="#d71818"  size={"20px"} /> : <AiFillHeart color="#d71818" size={"20px"} />}
                         </Button>
                       </Box>
                       <Text

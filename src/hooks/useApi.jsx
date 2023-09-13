@@ -21,10 +21,28 @@ const useApi = () => {
       }
     })
   }
+
+  const MovieDetails = async (id) => {
+    return await axios.get(`${baseurl}movie/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+  }
+
+  const MovieImage = async (id) => {
+    return await axios.get(`${baseurl}movie/${id}/images`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+  }
   
   return {
     FetchTopMovies,
     SearchMovie,
+    MovieDetails,
+    MovieImage,
   }
 }
 
