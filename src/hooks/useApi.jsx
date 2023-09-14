@@ -6,7 +6,7 @@ const token = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNWU5ZWUyMmZmYzBmOWNjZjYxNDc5ODQw
 const useApi = () => {
   
   const FetchTopMovies = async () => {
-    const res = await axios.get(`${baseurl}movie/popular?page=1`, {
+    const res = await axios.get(`${baseurl}movie/top_rated?page=1`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
