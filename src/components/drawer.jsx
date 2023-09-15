@@ -52,6 +52,8 @@ const DrawerComp = ({ isOpen, btnRef }) => {
           border={"1px solid #d2d2d2"}
           boxShadow={"none"}
           display={{ base: 'none', lg: 'block' }}
+          pos={'fixed'}
+          left={0}
         >
           <DrawerHeader>
             <Img src="/images/detailslogo.png" w="150px" />
