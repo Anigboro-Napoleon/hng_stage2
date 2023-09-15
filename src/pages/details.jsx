@@ -117,6 +117,7 @@ const Details = () => {
           size="lg"
           variant="enclosed-colored"
           mt="20px"
+          defaultIndex={2}
         >
           <TabList
             display="flex"
@@ -139,6 +140,8 @@ const Details = () => {
                 }}
                 minW={{ lg: "180px" }}
                 onClick={() => push(link)}
+                bg={'none'}
+                border={'none'}
               >
                 <Img src={img} />
                 <Text
